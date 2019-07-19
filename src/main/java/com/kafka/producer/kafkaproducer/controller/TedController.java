@@ -21,8 +21,11 @@ public class TedController {
     TedMapper tedMapper;
 
     @PostMapping
-    public void saveTed(@RequestBody TedVO tedVO){
-        GenericRecord genericRecord = tedMapper.mapToGenericRecord(tedVO);
-        producer.sendMessage(genericRecord);
+    public void saveTed(@RequestBody TedVO tedVO) {
+        producer.sendMessage(createGenericRecord(tedVO));
+    }
+
+    private GenericRecord createGenericRecord(TedVO tedVO) {
+        return tedMapper.mapToGenericRecord(tedVO);
     }
 }
